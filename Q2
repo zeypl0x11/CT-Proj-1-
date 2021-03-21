@@ -1,0 +1,96 @@
+# EXTRACT THIS CODE & SUBMIT AS p1q2.py TO RED!!!
+# Filename: p1q2.py
+# Name: CALMA ELEAZER ZEUS AMIGABLE
+# Section: G6
+
+# Except import statements, all other statements should only be in functions.
+
+def countPathsXleft(x1,y1,x2,y2): # recursive function that counts how many times x1 has to move, to the left, by y1 amount to x2 
+ 
+    if (x2==x1): # base case so that once x2 == x1, stops recursion and return value of 1
+        return 1
+    
+    print("Move Left : ",x1,",",y1,",",x2,",",y2)
+    return (countPathsXleft(x1,y1,x2+abs(y1), y2)) # continues recursion until x1 == x2
+
+def countPathsXright(x1,y1,x2,y2): # recursive function that counts how many times x1 has, to the right, move by y1 amount to x2
+ 
+    if (x2==x1): # base case so that once x2 == x1, stops recursion and return value of 1
+        return 1
+    
+    print("Move Right: ",x1,",",y1,",",x2,",",y2)
+    return(countPathsXright(x1,y1,x2-abs(y1), y2)) # continues recursion until x1 == x2
+
+def countPathsYup(x1,y1,x2,y2): # recursive function that counts how many times y1 has to move upwards by (x1 amount) to y2
+ 
+ 
+   
+    if (y2==y1): # base case so that once y2 == y1, stops recursion and return value of 1
+        return 1
+           
+    print("Move Up   : ",x1,",",y1,",",x2,",",y2)
+    return (countPathsYup(x1,y1,x2, y2-abs(x1))) # continues recursion until y1 == y2
+
+def countPathsYdown(x1,y1,x2,y2): # recursive function that counts how many times y1 has to move downwards by (x1 amount) to y2
+
+    if (y2==y1): # base case so that once y2 == y1, stops recursion and return value of 1
+        return 1
+    
+    print("Move Down : ",x1,",",y1,",",x2,",",y2)
+    return (countPathsYdown(x1,y1,x2, y2+abs(x1)))  # continues recursion until y1 == y2
+
+def validateEntryValue(x1,y1,x2,y2): # function that validates whether x1 can achieve x2, same with y1 and y2
+    # test x values
+    validatex = False # both x and y values are default false until proven to meet stated conditions
+    validatey = False
+    
+    if x1>x2: # if x1 > x2, x1 must be decreased by y1 times so as to reach x1 == x2
+      a=x1
+      while a>x2:
+          a=a-abs(y1) 
+      if a == x2:
+        validatex = True
+    elif x1<x2: # if x1 < x2, then x1 must be increased by y1 times so as to reach x1 == x2
+      a=x1
+      while a<x2:
+          a=a+abs(y1)
+      if a == x2:
+        validatex = True   
+        
+    if y1>y2: # if y1 > y2, then y1 must be decreased by x1 times so as to reach y1 == y2
+      a=y1
+      while a>y2:
+          a=a-abs(x1)
+      if a == y2:
+        validatey = True
+    elif y1<y2: # if y1 < y2, then y1 must be increased by x1 times so as to reach y1 == y2
+      a=y1
+      while a<y2:
+          a=a+abs(x1)
+      if a == y2:
+        validatey = True  
+    
+    if validatex== True and validatey== True: # if both validatex and validatey is true, then both x1 and y1 can reach x2 and y2 via four movement rule
+        return(True)
+    else:
+        return(False)
+
+def get_path(x1,y1,x2,y2):
+  if (validateEntryValue(x1,y1,x2,y2)==True):
+    if (x2>x1): # if x2 > x1, x1 must travel rightwards
+      if (y2>y1): # if y2 > y1, y1 must travel upwards
+        pathcount = countPathsXright(x1,y1,x2,y2) + countPathsYup(x1,y1,x2,y2)
+      elif (y2<y1): # if y2 > y1, y1 must travel downwards
+         pathcount = countPathsXright(x1,y1,x2,y2) + countPathsYdown(x1,y1,x2,y2)
+    elif (x2<x1): # if x1 > x2, x1 must travel leftwards
+      if (y2>y1): # if y2 > y1, y1 must travel upwards
+         pathcount = countPathsXleft(x1,y1,x2,y2) + countPathsYup(x1,y1,x2,y2)
+      elif (y2<y1): # if y2 > y1, y1 must travel downwards
+         pathcount = countPathsXleft(x1,y1,x2,y2) + countPathsYdown(x1,y1,x2,y2)
+    if pathcount>1: # another check since because at a given instance, the question will use two functions, up/down and left/right, and if they both return 1, a sum of 2 would mean both pass the functions.
+      return True 
+  else: # return false if validation fails
+    return False
+    
+
+
