@@ -23,8 +23,6 @@ def countPathsXright(x1,y1,x2,y2): # recursive function that counts how many tim
 
 def countPathsYup(x1,y1,x2,y2): # recursive function that counts how many times y1 has to move upwards by (x1 amount) to y2
  
- 
-   
     if (y2==y1): # base case so that once y2 == y1, stops recursion and return value of 1
         return 1
            
