@@ -1,0 +1,59 @@
+# EXTRACT THIS CODE & SUBMIT AS p1q1.py TO RED!!!
+# Filename: p1q1.py
+# Name: CALMA ELEAZER ZEUS AMIGABLE
+# Section: G6
+
+# Except import statements, all other statements should only be in functions.
+
+# initial call to check if list can even be split into two lists
+def group2(numlist, firstlist):
+  
+  if (sum(numlist) % 2 != 0): # if sum is odd, impossible to split into two lists
+    return None, None
+  
+  return groupFirstList_recursive(numlist, sum(numlist) / 2, 0, firstlist) # perform recursive function onto provided main list
+
+# recursive function to check through each number in list and adds to s1 (empty list) to fulfill sum
+def groupFirstList_recursive(numlist, sum, curIndex, firstlist):
+
+  if sum == 0: # if sum can be reduced to 0 from iterated values, main list can be split
+    return True
+
+  count = len(numlist) 
+  if count == 0 or curIndex >= count: # else, if there are no more values left to solve sum imbalance, main list cannot be split 
+    return False
+
+  if numlist[curIndex] <= sum: # checks if current number iterated is less than half of sum
+    if (groupFirstList_recursive(numlist, sum - numlist[curIndex], curIndex + 1,firstlist)): # sum is reduced based on the iterated value that is being appended because future iterated values being appended to list must be equal to sum
+      firstlist.append(numlist[curIndex]) # append iterated value that satisfies condition to another list 
+      return True
+
+  return groupFirstList_recursive(numlist, sum, curIndex + 1, firstlist) # calls itself to repeat same procedure to other values in main list
+
+# main function 
+def group(s):
+  s1 = [] 
+  s.sort(reverse = True) # descending order of numbers
+  if (group2(s,s1)==True): # if it passes through base conditions in above conditions, s1 gets the value of the list passed through the other functions
+    s2 = s 
+  else:
+    return None, None
+  for i in s1: # due to the recursive function, s1 now should have values that would satisfy sum / 2, hence we just need to remove the values in s1 in s2 to satisfy the values
+    s1List_curIndex = s2.index(i) 
+    if (s1List_curIndex != -1):
+      s2.pop(s1List_curIndex) # once we remove the values from s2, both sets with equal sum can now be returned 
+  
+  
+  return s1, s2
+
+#s = [2, 2, 2, 2, 4]
+#s = [1, 3, 5, 10, 2, 4, 9, 5, -1]
+#s = [-1, 1, 4, 2, 8, 0]
+#s = [135, 129, 141, 121, 105, 109, 105, 147]
+#s = [-14, 3, 4, 13, -1, -5, 0, 5, -10, 8, -4, 10, -12, 11, 9, 12, -6, -11, -9, -8]
+#s = [-16, -18, 1, 2, -4, 8, -11, 0, 16, -11, 11, -2, -11, 6, -14, -17, -11, -10, 15, -17]
+#s = [7, -3, 6, 1, 10, -4, 2, 2, 6, 7, -3, 2, 4, 0, 7, 6, -2, 10, -4, 10]
+#s = [-16, -2, -13, -28, -7, 0, -9, -20, 0, -21, -22, -29, -4, -26, -10]
+#s = [-14, 3, 4, 13, -1, -5, 0, 5, -10, 8, -4, 10, -12, 11, 9, 12, -6, -11, -9, -8]
+#s = [7, 11, 4, 4, 8, 4, 2, 4, 3, 7, 13, 7, 5, 5, 5, 13, 13, 1, 4, 9, 4, 11, 3, 9, 2]
+#s = [-13, -4, -27, -15, -27, -3, -10, -1, -27, -12, -27, -5, -18, -5, -4, -3, -27, -29]
